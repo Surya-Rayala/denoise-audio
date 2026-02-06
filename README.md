@@ -27,7 +27,7 @@ uv --version
 ## Install dependencies
 
 ```bash
-git clone <YOUR_REPO_URL>
+git clone https://github.com/Surya-Rayala/denoise-audio.git
 cd denoise-audio
 uv sync
 ```
