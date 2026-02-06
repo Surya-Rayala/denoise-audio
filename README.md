@@ -1,6 +1,6 @@
 # denoise-audio
 
-A small CLI tool for denoising **WAV** audio with selectable backends:
+A CLI tool for denoising **WAV** audio with 3 leading backends:
 
 - **rnnoise** (fast, CPU-only, low-latency)
 - **deepfilternet** (high-quality full-band denoising; offline/batch friendly)
@@ -160,3 +160,8 @@ git fetch origin
 git reset --hard origin/main
 uv sync
 ```
+
+## License
+This project's source code is licensed under the MIT License.
+
+**Note on Dependencies:** This tool relies on the `denoiser` library (Facebook Research), which is licensed under **CC-BY-NC 4.0** (Non-Commercial). Consequently, this tool as a whole is suitable for research and personal use only, unless you obtain a commercial license for the `denoiser` dependency.
