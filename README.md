@@ -26,11 +26,11 @@ uv --version
 
 ## Install dependencies
 
-Clone the repo and install dependencies from the lockfile:
-
+```bash
 git clone <YOUR_REPO_URL>
 cd denoise-audio
 uv sync
+```
 
 ---
 
@@ -38,97 +38,91 @@ uv sync
 
 Run everything with uv run to ensure you’re using the project environment:
 
-Global help
+### Global help
 
+```bash
 uv run python -m denoise --help
+```
 
-List available backends
+### List available backends
 
+```bash
 uv run python -m denoise --list-models
+```
 
-Model-specific help
+### Model-specific help
 
-Pass --model <name> and --help to see only that backend’s options:
+Pass `--model <name>` and `--help` to see only that backend’s options:
 
+```bash
 uv run python -m denoise --model rnnoise --help
 uv run python -m denoise --model deepfilternet --help
 uv run python -m denoise --model fbdenoiser --help
+```
 
 ---
 
 ## Basic command (all models)
 
+```bash
 uv run python -m denoise --model <model> --input <in.wav> --output <out.wav>
+```
 
-	•	<model> is one of: rnnoise, deepfilternet, fbdenoiser
-	•	--input and --output must be WAV files
+- `<model>` is one of: `rnnoise`, `deepfilternet`, `fbdenoiser`
+- `--input` and `--output` must be WAV files
 
 ---
 
 ## Models
 
-1) RNNoise (--model rnnoise)
+### RNNoise (`--model rnnoise`)
 
-Basic command
+**Basic command**
 
+```bash
 uv run python -m denoise --model rnnoise --input <in.wav> --output <out.wav>
+```
 
-Arguments
-	•	--rnnoise-sample-rate <int>
-Force the RNNoise wrapper sample rate.
-If omitted, the tool infers the sample rate from the input WAV (recommended).
+**Arguments**
+- `--rnnoise-sample-rate <int>`: Force the RNNoise wrapper sample rate. If omitted, the tool infers the sample rate from the input WAV (recommended).
 
 ---
 
-2) DeepFilterNet (--model deepfilternet)
+### DeepFilterNet (`--model deepfilternet`)
 
-Basic command
+**Basic command**
 
+```bash
 uv run python -m denoise --model deepfilternet --input <in.wav> --output <out.wav>
+```
 
-Arguments
-	•	--df-model <name>
-Select which pretrained DeepFilterNet model to load. Common options:
-	•	DeepFilterNet
-	•	DeepFilterNet2
-	•	DeepFilterNet3
-To see available models, visit:
-https://github.com/Rikorose/DeepFilterNet/tree/main/models
-	•	--df-pf
-Enable the post-filter. This can reduce residual noise, but may sound slightly more aggressive in very noisy sections.
-	•	--df-compensate-delay
-Add padding to compensate processing delay introduced by STFT/ISTFT and model lookahead. Useful when you need better alignment with the original audio.
+**Arguments**
+- `--df-model <name>`: Select which pretrained DeepFilterNet model to load. Common options: `DeepFilterNet`, `DeepFilterNet2`, `DeepFilterNet3`.
+  - To see available models, visit: https://github.com/Rikorose/DeepFilterNet/tree/main/models
+- `--df-pf`: Enable the post-filter (can reduce residual noise; may sound more aggressive in very noisy sections).
+- `--df-compensate-delay`: Add padding to compensate processing delay (useful when you need better alignment with the original audio).
 
 ---
 
-3) FacebookResearch Denoiser (--model fbdenoiser)
+### FacebookResearch Denoiser (`--model fbdenoiser`)
 
-Basic command
+**Basic command**
 
+```bash
 uv run python -m denoise --model fbdenoiser --input <in.wav> --output <out.wav>
+```
 
-Arguments
-	•	--fb-model <name>
-Choose the pretrained model:
-	•	dns48 — pre-trained real time H=48 model trained on DNS
-	•	dns64 — pre-trained real time H=64 model trained on DNS
-	•	master64 — pre-trained real time H=64 model trained on DNS and Valentini
-	•	--fb-device <device>
-Inference device, e.g. cpu or cuda.
-If omitted, it automatically uses CUDA if available, otherwise CPU.
-	•	--fb-dry <float>
-Dry/wet mix:
-	•	0.0 = original input only
-	•	1.0 = denoised output only
-Values outside [0.0, 1.0] are clamped.
-	•	--fb-streaming
-Enable streaming mode (flag is accepted by the CLI).
-	•	--fb-batch-size <int>
-Batch size (flag is accepted by the CLI).
-	•	--fb-num-workers <int>
-Number of workers (flag is accepted by the CLI).
-	•	--fb-verbose
-Enable verbose logging (flag is accepted by the CLI).
+**Arguments**
+- `--fb-model <name>`: Choose the pretrained model:
+  - `dns48`: pre-trained real time H=48 model trained on DNS
+  - `dns64`: pre-trained real time H=64 model trained on DNS
+  - `master64`: pre-trained real time H=64 model trained on DNS and Valentini
+- `--fb-device <device>`: Inference device, e.g. `cpu` or `cuda`. If omitted, it automatically uses CUDA if available, otherwise CPU.
+- `--fb-dry <float>`: Dry/wet mix (`0.0` = original input only, `1.0` = denoised output only). Values outside `[0.0, 1.0]` are clamped.
+- `--fb-streaming`: Enable streaming mode (flag is accepted by the CLI).
+- `--fb-batch-size <int>`: Batch size (flag is accepted by the CLI).
+- `--fb-num-workers <int>`: Number of workers (flag is accepted by the CLI).
+- `--fb-verbose`: Enable verbose logging (flag is accepted by the CLI).
 
 ---
 
