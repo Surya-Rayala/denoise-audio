@@ -1,0 +1,14 @@
+[project]
+name = "denoise-audio"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.10.*"
+dependencies = [
+    "deepfilternet>=0.5.6",
+    "denoiser>=0.1.5",
+    "pyrnnoise>=0.4.3",
+    "requests>=2.32.5",
+    "torch==2.0.1",
+    "torchaudio==2.0.2",
+]
