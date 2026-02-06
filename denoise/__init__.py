@@ -1,4 +1,3 @@
-
 """
 
 Package layout:
@@ -18,20 +17,66 @@ Package layout:
 
 from __future__ import annotations
 
-from typing import Any, Dict, Iterator, Optional
+from dataclasses import MISSING, fields, is_dataclass
+from typing import Any, Dict, Iterator
 
 from .backends import available_models as available_models
+from .backends import backend_help as backend_help
 from .backends import create_backend
+from .backends import get_backend_class
 
 
 __all__ = [
     "__version__",
     "available_models",
+    "backend_help",
+    "model_description",
+    "model_kwargs_help",
     "denoise_file",
 ]
 
 # Keep this simple; you can replace with dynamic versioning later.
 __version__ = "0.1.0"
+
+
+def model_description(model: str) -> str:
+    """Return the one-line description for a backend/model."""
+    cls = get_backend_class(model)
+    return str(getattr(cls, "description", ""))
+
+
+def model_kwargs_help(model: str) -> Dict[str, Dict[str, Any]]:
+    """Return allowed kwargs for `denoise_file(..., model=..., **kwargs)`.
+
+    The kwargs correspond to fields on the backend's config dataclass.
+
+    Returns:
+        A mapping of field name -> {"type": <string>, "default": <value>}.
+    """
+    cls = get_backend_class(model)
+    cfg = getattr(cls, "config_type", None)
+
+    if cfg is None or not is_dataclass(cfg):
+        return {}
+
+    out: Dict[str, Dict[str, Any]] = {}
+
+    for f in fields(cfg):
+        # Determine a readable default.
+        if f.default is not MISSING:
+            default = f.default
+        elif getattr(f, "default_factory", MISSING) is not MISSING:  # type: ignore[attr-defined]
+            default = "<factory>"
+        else:
+            default = None
+
+        # Best-effort readable type string.
+        t = f.type
+        type_str = getattr(t, "__name__", None) or str(t)
+
+        out[f.name] = {"type": type_str, "default": default}
+
+    return out
 
 
 def denoise_file(

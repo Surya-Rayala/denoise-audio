@@ -3,7 +3,7 @@
 A CLI tool for denoising **WAV** audio with 3 leading backends:
 
 - **rnnoise** (fast, CPU-only, low-latency)
-- **deepfilternet** (high-quality full-band denoising; offline/batch friendly)
+- **deepfilternet** (high-quality full-band denoising)
 - **fbdenoiser** (FacebookResearch Denoiser / causal Demucs; strong enhancement, GPU recommended)
 
 > Inputs/outputs are WAV files. If your audio is not WAV, convert it first.
