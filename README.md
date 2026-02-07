@@ -10,7 +10,118 @@ A CLI tool for denoising **WAV** audio with 3 leading backends:
 
 ---
 
-## Install `uv`
+## Install with `pip` (PyPI)
+
+> Use this if you want to install and use the tool without cloning the repo.
+
+### Install
+
+```bash
+pip install denoise-audio
+```
+
+### CLI usage (pip)
+
+Global help:
+
+```bash
+python -m denoise --help
+```
+
+List available backends:
+
+```bash
+python -m denoise --list-models
+```
+
+Model-specific help:
+
+```bash
+python -m denoise --model rnnoise --help
+python -m denoise --model deepfilternet --help
+python -m denoise --model fbdenoiser --help
+```
+
+Basic command (all models):
+
+```bash
+python -m denoise --model <model> --input <in.wav> --output <out.wav>
+```
+
+- `<model>` is one of: `rnnoise`, `deepfilternet`, `fbdenoiser`
+- `--input` and `--output` must be WAV files
+
+---
+
+## Python usage (import)
+
+You can also use this package directly in your Python code after installing with `pip install denoise-audio`.
+
+### Quick sanity check
+
+```bash
+python -c "import denoise; print(denoise.__version__)"
+```
+
+### List available models/backends
+
+```python
+from denoise import available_models, backend_help
+
+print(available_models())
+print(backend_help())
+```
+
+### Inspect supported keyword arguments for each model
+
+```python
+from denoise import model_kwargs_help
+
+print(model_kwargs_help("rnnoise"))
+print(model_kwargs_help("deepfilternet"))
+print(model_kwargs_help("fbdenoiser"))
+```
+
+### Run denoising from a Python file
+
+Create `run_denoise.py`:
+
+```python
+from denoise import denoise_file
+
+IN_WAV = "input.wav"
+OUT_WAV = "output.wav"
+
+# Choose one: rnnoise | deepfilternet | fbdenoiser
+MODEL = "rnnoise"
+
+# Model-specific kwargs (examples below)
+kwargs = {}
+
+# Example: RNNoise
+# kwargs = {"rnnoise_sample_rate": 48000}
+
+# Example: DeepFilterNet
+# kwargs = {"df_model": "DeepFilterNet3", "df_pf": True, "df_compensate_delay": True}
+
+# Example: FacebookResearch Denoiser
+# kwargs = {"fb_model": "dns64", "fb_device": "cpu", "fb_dry": 1.0}
+
+for _ in denoise_file(IN_WAV, OUT_WAV, model=MODEL, **kwargs):
+    pass
+
+print(f"Wrote: {OUT_WAV}")
+```
+
+Run it:
+
+```bash
+python run_denoise.py
+```
+
+---
+
+## Install from GitHub (uv)
 
 Install `uv` using Astral’s standalone installer:
 
