@@ -1,6 +1,6 @@
 [project]
 name = "denoise-audio"
-version = "0.1.0"
+version = "0.1.1"
 description = "Denoise WAV audio using RNNoise, DeepFilterNet, and FacebookResearch Denoiser."
 readme = "README.md"
 authors = [
