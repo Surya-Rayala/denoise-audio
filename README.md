@@ -51,6 +51,21 @@ python -m denoise --model <model> --input <in.wav> --output <out.wav>
 - `<model>` is one of: `rnnoise`, `deepfilternet`, `fbdenoiser`
 - `--input` and `--output` must be WAV files
 
+### Recommended environment (Python 3.10)
+
+A fresh virtual environment with **Python 3.10** is recommended to avoid dependency conflicts.
+
+### Troubleshooting: `wheel` / `packaging` conflicts
+
+Some environments may already have a newer `wheel` installed that requires `packaging>=24`, while `deepfilternet` requires `packaging<24`.
+
+If you see an error mentioning a `wheel`/`packaging` conflict, use a clean venv (recommended) or pin compatible versions:
+
+```bash
+python -m pip install --upgrade "packaging>=23,<24" "wheel<0.46"
+python -m pip install --upgrade --force-reinstall denoise-audio
+```
+
 ---
 
 ## Python usage (import)
