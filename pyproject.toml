@@ -1,7 +1,7 @@
 [project]
 name = "denoise-audio"
 version = "0.1.0"
-description = "Add your description here"
+description = "Denoise WAV audio using RNNoise, DeepFilterNet, and FacebookResearch Denoiser."
 readme = "README.md"
 requires-python = "==3.10.*"
 dependencies = [
