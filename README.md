@@ -9,6 +9,11 @@ A CLI tool for denoising **WAV** audio with 3 leading backends:
 > Inputs/outputs are WAV files. If your audio is not WAV, convert it first.
 
 ---
+## Install with `pip` (PyPI)
+
+> Use this if you want to install and use the tool without cloning the repo.
+> Requires **(Python ==3.10.*)**.
+
 
 ## Install with `pip` (PyPI)
 
